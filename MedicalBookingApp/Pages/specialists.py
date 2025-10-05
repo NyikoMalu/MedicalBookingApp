@@ -1,28 +1,32 @@
 import streamlit as st
+import pandas as pd
 import plotly.express as px
 
-def app(client):
+def app():
     st.title("👨‍⚕️ Specialists")
-    st.caption("Browse available medical specialists and their ratings.")
+    st.markdown("Browse all available specialists.")
 
-    if client:
-        try:
-            query = """
-                SELECT FirstName, LastName, Specialty, Rating
-                FROM `medical-booking-system-473907.MedicalBookingDB.Specialists`
-                ORDER BY Rating DESC
-            """
-            df = client.query(query).to_dataframe()
-            if not df.empty:
-                st.subheader("Top Rated Specialists")
-                st.dataframe(df)
+    # Sample specialists data
+    data = {
+        "Specialist": ["Dr. Smith", "Dr. Johnson", "Dr. Lee", "Dr. Patel", "Dr. Kim"],
+        "Specialty": ["Cardiology", "Dermatology", "Neurology", "Pediatrics", "Orthopedics"],
+        "Experience (yrs)": [10, 7, 15, 5, 12]
+    }
+    df = pd.DataFrame(data)
 
-                fig = px.bar(df, x="FirstName", y="Rating", color="Specialty", text="Rating",
-                             title="Specialist Ratings", color_discrete_sequence=px.colors.qualitative.Bold)
-                fig.update_traces(textposition="outside")
-                st.plotly_chart(fig, use_container_width=True)
-        except Exception as e:
-            st.error(f"❌ Error fetching specialists: {e}")
+    st.table(df)
+
+    # Top specialties chart
+    st.subheader("🏆 Specialists by Specialty")
+    specialty_count = df["Specialty"].value_counts().reset_index()
+    specialty_count.columns = ["Specialty", "Count"]
+    fig = px.bar(specialty_count, x="Specialty", y="Count", 
+                 color="Specialty", text="Count",
+                 color_discrete_sequence=px.colors.qualitative.Bold)
+    fig.update_traces(textposition="outside")
+    st.plotly_chart(fig, use_container_width=True)
+
+
 
 
 
