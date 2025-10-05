@@ -11,19 +11,20 @@ with st.sidebar:
         default_index=0,
     )
 
-# --- Import pages based on selection ---
 if selected == "🏠 Home":
-    from Pages import _1_Home as home
-    home.app()
+    from Pages.home import app as home_app
+    home_app()
 elif selected == "👨‍⚕️ Specialists":
-    from Pages import _2_Specialists as specialists
-    specialists.app()
+    from Pages.specialists import app as specialists_app
+    specialists_app()
 elif selected == "🗓️ Book Appointment":
-    from Pages import _3_Book_Appointment as book
-    book.app()
+    from Pages.book_appointment import app as book_app
+    book_app()
 elif selected == "📑 My Appointments":
-    from Pages import _4_My_Appointments as my_appointments
-    my_appointments.app()
+    from Pages.my_appointments import app as my_appointments_app
+    my_appointments_app()
+
+
 
 
 
