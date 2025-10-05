@@ -1,10 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 
-# Page config
-st.set_page_config(page_title="Medical Booking System", layout="wide")
-
-# Sidebar navigation
+# --- SIDEBAR MENU ---
 with st.sidebar:
     selected = option_menu(
         "📋 Navigation",
@@ -14,17 +11,19 @@ with st.sidebar:
         default_index=0,
     )
 
-# Import pages
+# --- PAGE RENDERING ---
 if selected == "🏠 Home":
-    from pages import _1_Home as home
+    from pages import home
     home.app()
 elif selected == "👨‍⚕️ Specialists":
-    from pages import _2_Specialists as specialists
+    from pages import specialists
     specialists.app()
 elif selected == "🗓️ Book Appointment":
-    from pages import _3_Book_Appointment as book
-    book.app()
+    from pages import book_appointment
+    book_appointment.app()
 elif selected == "📑 My Appointments":
-    from pages import _4_My_Appointments as my_appointments
+    from pages import my_appointments
     my_appointments.app()
+
+
 
